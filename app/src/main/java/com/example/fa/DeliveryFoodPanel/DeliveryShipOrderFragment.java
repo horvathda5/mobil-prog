@@ -29,7 +29,8 @@ public class DeliveryShipOrderFragment extends Fragment {
     private List<DeliveryShipFinalOrders1> deliveryShipFinalOrders1List;
     private DeliveryShipOrderFragmentAdapter adapter;
     private DatabaseReference databaseReference;
-
+    private static final String DELIVERY_ID = "FiskLkwpt9ZYgm19yZB8ldmrqD22";
+    
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,13 +46,13 @@ public class DeliveryShipOrderFragment extends Fragment {
 
     private void DeliveryShipfinalOrder() {
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("DeliveryShipFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        databaseReference = FirebaseDatabase.getInstance().getReference("DeliveryShipFinalOrders").child(DELIVERY_ID);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 deliveryShipFinalOrders1List.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    DatabaseReference data = FirebaseDatabase.getInstance().getReference("DeliveryShipFinalOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey()).child("OtherInformation");
+                    DatabaseReference data = FirebaseDatabase.getInstance().getReference("DeliveryShipFinalOrders").child(DELIVERY_ID).child(snapshot.getKey()).child("OtherInformation");
                     data.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

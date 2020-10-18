@@ -35,7 +35,7 @@ public class DeliveryPendingOrderFragment extends Fragment {
     private DeliveryPendingOrderFragmentAdapter adapter;
     private DatabaseReference databaseReference;
     private SwipeRefreshLayout swipeRefreshLayout;
-    String deliveryId = "FiskLkwpt9ZYgm19yZB8ldmrqD22";
+    private static final String DELIVERY_ID = "FiskLkwpt9ZYgm19yZB8ldmrqD22";
 
     @Nullable
     @Override
@@ -49,8 +49,6 @@ public class DeliveryPendingOrderFragment extends Fragment {
         deliveryShipOrders1List = new ArrayList<>();
         swipeRefreshLayout = view.findViewById(R.id.Swipe);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark, R.color.green);
-        adapter = new DeliveryPendingOrderFragmentAdapter(getContext(), deliveryShipOrders1List);
-        recyclerView.setAdapter(adapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -63,40 +61,37 @@ public class DeliveryPendingOrderFragment extends Fragment {
             }
         });
         DeliveryPendingOrders();
+        /*adapter = new DeliveryPendingOrderFragmentAdapter(getContext(), deliveryShipOrders1List);
+        recyclerView.setAdapter(adapter);*/
 
         return view;
     }
 
     private void DeliveryPendingOrders() {
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("DeliveryShipOrders").child(deliveryId);
+        databaseReference = FirebaseDatabase
+                .getInstance()
+                .getReference("DeliveryShipOrders")
+                .child(DELIVERY_ID);
+
+        final String userUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     deliveryShipOrders1List.clear();
+                    List<DeliveryShipOrders1> orders = new ArrayList<>();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        DatabaseReference data = FirebaseDatabase.getInstance().getReference("DeliveryShipOrders").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey()).child("OtherInformation");
-                        data.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                DeliveryShipOrders1 deliveryShipOrders1 = dataSnapshot.getValue(DeliveryShipOrders1.class);
-                                deliveryShipOrders1List.add(deliveryShipOrders1);
-                                adapter = new DeliveryPendingOrderFragmentAdapter(getContext(), deliveryShipOrders1List);
-                                recyclerView.setAdapter(adapter);
-                                swipeRefreshLayout.setRefreshing(false);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
+                        DeliveryShipOrders1 deliveryShipOrders1 = snapshot
+                                .child("OtherInformation")
+                                .getValue(DeliveryShipOrders1.class);
+                        orders.add(deliveryShipOrders1);
                     }
-                } else {
-                    swipeRefreshLayout.setRefreshing(false);
+                    adapter = new DeliveryPendingOrderFragmentAdapter(getContext(), orders);
+                    recyclerView.setAdapter(adapter);
                 }
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -104,7 +99,6 @@ public class DeliveryPendingOrderFragment extends Fragment {
 
             }
         });
-
     }
 
     @Override

@@ -40,7 +40,6 @@ public class DeliveryShipOrderFragmentAdapter extends RecyclerView.Adapter<Deliv
     private List<DeliveryShipFinalOrders1> deliveryShipFinalOrders1list;
     private APIService apiService;
 
-
     public DeliveryShipOrderFragmentAdapter(Context context, List<DeliveryShipFinalOrders1> deliveryShipFinalOrders1list) {
         this.deliveryShipFinalOrders1list = deliveryShipFinalOrders1list;
         this.context = context;
