@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Food Land</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string-array name="Cityy">
+        <item>Paks</item>
+        <item>Veszprém</item>
+        <item>Szekszárd</item>
+        <item>Pécs</item>
+        <item>Tolna</item>
+        <item>Ajka</item>
+        <item>Fehérvár</item>
+    </string-array>
+
+
+    <string-array name="State">
+        <item>Tolna</item>
+        <item>Veszprém</item>
+        <item>Somogy</item>
+        <item>Vas</item>
+    </string-array>
+
+    <string-array name="shipper">
+        <item>Shipper 1</item>
+        <item>Shipper 2</item>
+    </string-array>
+
+    <string-array name="DishName">
+        <item>Sonkás Pizza</item>
+        <item>Hamburger</item>
+        <item>Dhokla</item>
+        <item>Bolognais tortilla</item>
+        <item>Chilis bab</item>
+        <item>4 sajtos pizza</item>
+        <item>Sonkás pizza</item>
+        <item>Undhiyu</item>
+        <item>Aloo Paratha</item>
+        <item>Patra</item>
+        <item>Fűszeres pirított tészta</item>
+        <item>wrap</item>
+        <item>Tonhalas garnélás pizza</item>
+        <item>Paradicsomos tészta</item>
+        <item>Csoki mousse</item>
+        <item>Sültkrumpli</item>
+        <item>Epres csokis palacsinta</item>
+
+    </string-array>
+</resources>
